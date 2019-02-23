@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动画</title>
+
+	<style>
+		div:hover{
+			transform: rotate(180deg);
+		}
+		@keyframes rotate {
+			0%{
+				transform: rotate(0deg);
+			}
+			100%{
+				transform: rotate(360deg);
+			}
+		}
+		div{
+			margin: 0 auto;
+			width: 300px;
+			height: 300px;
+			background-color: red;
+			animation-name: rotate;   /*动画的名字*/
+			animation-duration: 5s;   /*检索或设置对象动画的持续时间*/
+			animation-timing-function: linear/*匀速*/;   /*从开头到结尾以相同的速度来播放动画*/
+			animation-delay: 2s;    /*动画延迟时间*/
+			animation-iteration-count: 2;  /*动画次数*/
+			animation-iteration-count: infinite;  /* 无限次*/
+			animation-direction: alternate;   /*交互方向转动*/
+			animation-fill-mode: forwards;    /*开始方向*/
+			animation-fill-mode: backwards;    /*结束方向*/
+			animation: rotate 5s linear 2s 1 alternate forwards;    /*将上述效果，综合写出*/
+
+		}
+		div:hover{
+			animation-play-state: paused;   /*在鼠标经过时，暂停动画*/
+		}
+
+
+
+		section:hover{
+			transform: rotate(180deg);
+		}
+		@keyframes rotate {
+			0%{
+				transform: rotate(0deg);
+			}
+			100%{
+				transform: rotate(360deg);
+			}
+		}
+		section{
+			margin: 100px auto;
+			width: 300px;
+			height: 300px;
+			background-color: blue;
+			animation-name: rotate;   /*动画的名字*/
+			/*animation-duration: 5s;*/   /*检索或设置对象动画的持续时间*/
+			/*animation-timing-function: linear*//*匀速*/;   /*从开头到结尾以相同的速度来播放动画*/
+			/*animation-delay: 2s; */   /*动画延迟时间*/
+			/*animation-iteration-count: 2;*/  /*动画次数*/
+			/*animation-iteration-count: infinite;*/  /* 无限次*/
+			/*animation-direction: alternate;*/   /*交互方向转动*/
+			/*animation-fill-mode: forwards;*/    /*开始方向*/
+			/*animation-fill-mode: backwards;*/    /*结束方向*/
+			animation: rotate 5s linear 2s 1 alternate forwards;    /*将上述效果，综合写出*/
+			animation-iteration-count: infinite;   /* 无限次*/
+
+		}
+		section:hover{
+			animation-play-state: paused;   /*在鼠标经过时，暂停动画*/
+		}
+	</style>
+</head>
+<body>
+	<div></div>
+	<section></section>
+</body>
+</html>

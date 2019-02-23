@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>流式布局</title>
+
+	<style>
+		.box{
+			/*width: 100%;*/
+			height: 300px;
+			width: 1000px;
+			margin: 0 auto;
+		}
+		.itme{
+			width: 33.333333%;
+			height: 300px;
+			background-color: #f99;
+			float: left;
+		}
+		.itme:nth-child(2){
+			background: yellow;
+		}
+		@media screen and (max-width: 1040px){
+			.box{
+				width: 100%;
+			}
+			/*.itme{
+				width: 33.333333%;
+			}*/
+		}
+		/*媒体查询：根据当前设备的分辨率 来控制某一部分样式是否起作用*/
+		/*阀值：临界值
+		min-width max-width*/
+
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="itme"></div>
+		<div class="itme"></div>
+		<div class="itme"></div>
+	</div>
+</body>
+</html>

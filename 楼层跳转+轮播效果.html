@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>无缝轮播</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-decoration: none;
+            font-style: normal;
+        }
+
+        .toTop{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(#fff, #fe604a 80%,#fff);
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            color: #fe604a;
+            text-align: center;
+            line-height: 50px;
+        }
+        .containerlunbo {
+            width: 1000px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            margin-top: 100px;
+        }
+
+        .inner {
+            width: 6000px;
+            height: 200px;
+            margin-left: -1000px;
+            transition: all 1s;
+        }
+
+        .inner li {
+            width: 200px;
+            height: 200px;
+            float: left;
+            border-right: 1px;
+        }
+
+        .inner li a {
+            display: block;
+            width: 200px;
+            height: 200px;
+            color: white;
+            font-size: 40px;
+            line-height: 200px;
+            text-align: center;
+            background: #fe604a;
+            text-decoration: none;
+        }
+
+        .prev, .next {
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            font-weight: 1000;
+            background: blue;
+            color: white;
+            position: absolute;
+            top: 85px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 30px;
+            display: none;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .topBar{
+            width: 1000px;
+            height: 100px;
+            background: #fe604a;
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 0;
+            margin-left: -500px;
+        }
+        .leftBar{
+            width: 100px;
+            height: 400px;
+            position: fixed;
+            left: 50%;
+            bottom: 115px;
+            display: none;
+            background-color: #333333;
+            margin-left: -700px;
+        }
+        .container{
+            width: 1190px;
+            height: 500px;
+            margin: 30px auto;
+            text-align: center;
+            border: 1px solid #ffac13;
+            line-height: 500px;
+            font-size: 30px;
+        }
+        .b{
+            width: 100px;
+            height: 100px;
+        }
+        .tips{
+            width: 100%;
+            height: 50px;
+            text-align: center;
+            background-color: #757575;
+            line-height: 50px;
+        }
+        .tips:hover{
+            background-color: #ff820b;
+        }
+        .tips.active{
+            background-color: #ff820b;
+            color: #fff;
+        }
+
+        /*banner*/
+        #banner {
+            width: 1226px;
+            height: 460px;
+            margin: 0 auto;
+            position: relative;
+            background-color: red;
+        }
+
+        .imgbox {
+            width: 1226px;
+            height: 460px;
+            position: relative;
+        }
+
+        .imgbox li {
+            width: 1226px;
+            height: 460px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: all .5s;
+            opacity: 0;
+        }
+
+        .imgbox li.active {
+            z-index: 9;
+            opacity: 1;
+        }
+
+        .pagerbox {
+            width: 150px;
+            height: 10px;
+            position: absolute;
+            bottom: 20px;
+            right: 40px;
+            z-index: 999;
+            transition: all .5s;
+        }
+
+        .pagerbox li.active {
+            background-color: red;
+        }
+
+        .pagerbox li {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 2px solid rgba(0, 0, 0, 0);
+            margin-right: 15px;
+            cursor: pointer;
+            float: left;
+            transition: all .5s;
+        }
+
+        .pagerbox li:hover {
+            background-color: red;
+        }
+
+        /*.banner_jiantou {*/
+            /*float: right;*/
+        /*}*/
+
+        .banner_btn {
+            width: 41px;
+            height: 69px;
+            text-align: center;
+            line-height: 69px;
+            color: #A7A8AA;
+            font-size: 50px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            z-index: 999;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .banner_lbtn {
+            left: 234px;
+        }
+
+        .banner_rbtn {
+            right: 0;
+        }
+
+        .banner_btn:hover {
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<!--totop-->
+<div class="toTop">Top</div>
+<!--wufenglunbo-->
+<div class="containerlunbo">
+    <div class="prev">&lt;</div>
+    <div class="next">&gt;</div>
+    <ul class="inner">
+        <li class="item"><a href="">K</a></li>
+        <li class="item"><a href="">L</a></li>
+        <li class="item"><a href="">M</a></li>
+        <li class="item"><a href="">G</a></li>
+        <li class="item"><a href="">O</a></li>
+        <li class="item"><a href="">A</a></li>
+        <li class="item"><a href="">B</a></li>
+        <li class="item"><a href="">C</a></li>
+        <li class="item"><a href="">D</a></li>
+        <li class="item"><a href="">E</a></li>
+        <li class="item"><a href="">F</a></li>
+        <li class="item"><a href="">G</a></li>
+        <li class="item"><a href="">H</a></li>
+        <li class="item"><a href="">I</a></li>
+        <li class="item"><a href="">J</a></li>
+        <li class="item"><a href="">K</a></li>
+        <li class="item"><a href="">L</a></li>
+        <li class="item"><a href="">M</a></li>
+        <li class="item"><a href="">G</a></li>
+        <li class="item"><a href="">O</a></li>
+        <li class="item"><a href="">A</a></li>
+        <li class="item"><a href="">B</a></li>
+        <li class="item"><a href="">C</a></li>
+        <li class="item"><a href="">D</a></li>
+        <li class="item"><a href="">E</a></li>
+    </ul>
+</div>
+
+<!--louceng-->
+
+<div class="topBar">
+
+</div>
+<div class="leftBar">
+    <div class="tips">1</div>
+    <div class="tips">2</div>
+    <div class="tips">3</div>
+    <div class="tips">4</div>
+    <div class="tips">5</div>
+    <div class="tips">6</div>
+    <div class="tips">7</div>
+    <div class="tips">8</div>
+</div>
+
+<div class="b"></div>
+<div class="container">1</div>
+<div class="container">2</div>
+<div class="container">3</div>
+<div class="container">4</div>
+<div class="container">5</div>
+<div class="container">6</div>
+<div class="container">7</div>
+<div class="container">8</div>
+<div class="b"></div>
+
+<!--banner-->
+
+<div id="banner">
+    <div class="sidebar">
+        <div class="label">
+            <span>1</span>
+            <div class="menu">1</div>
+        </div>
+        <div class="label">
+            <span>2</span>
+            <div class="menu">2</div>
+        </div>
+        <div class="label">
+            <span>3</span>
+            <div class="menu">3</div>
+        </div>
+        <div class="label">
+            <span>4</span>
+            <div class="menu">4</div>
+        </div>
+        <div class="label">
+            <span>5</span>
+            <div class="menu">5</div>
+        </div>
+    </div>
+    <ul class="imgbox">
+        <li class="active"><img src="img/banner1.jpg" alt=""></li>
+        <li><img src="img/banner2.jpg" alt=""></li>
+        <li><img src="img/banner3.jpg" alt=""></li>
+        <li><img src="img/banner4.jpg" alt=""></li>
+        <li><img src="img/banner5.jpg" alt=""></li>
+    </ul>
+    <ul class="pagerbox">
+        <li class="active"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="banner_btn banner_lbtn">&lt;</div>
+    <div class="banner_btn banner_rbtn">&gt;</div>
+
+</div>
+<!--neirong-->
+<div class="content">
+    <div class="content-top">
+        <div class="type active1">热门</div>
+        <div class="type">电视影音</div>
+        <div class="type">电脑</div>
+        <div class="type">家居</div>
+    </div>
+    <div class="content-bottom">
+        <div class="goods active1">1</div>
+        <div class="goods">2</div>
+        <div class="goods">3</div>
+        <div class="goods">4</div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    //toTop
+    $(".toTop").click(function () {
+        // $(window).scrollTop(0);
+        $("html,body").animate({scrollTop:0});
+    });
+    $(window).scroll(function () {
+        let st=$(window).scrollTop();
+        if(st>600){
+            $(".toTop").show();
+        }else {
+            $(".toTop").hide();
+        }
+    });
+    //无缝轮播
+    let inner = $(".inner");
+    $(".containerlunbo")
+        .mouseenter(function () {
+        $(".prev,.next").fadeIn(500)
+    })
+    .mouseleave(function () {
+        $(".prev,.next").fadeOut(500)
+    });
+    let n = 1;
+    let flag = true;
+    $(".next").click(function () {
+        if (flag) {
+            flag = false;
+            n++;
+            inner.animate({marginLeft: -n * 1000}, 1000,
+                function () {
+                    flag = true;
+                    if (n === 4) {
+                        inner.css("marginLeft", -1000);
+                        n = 1;
+                    }
+                });
+        }
+    });
+    $(".prev").click(function () {
+        if(flag){
+            flag=false;
+            n--;
+            inner.animate({marginLeft: -n * 1000}, 1000,
+            function () {
+                flag=true;
+                if(n===0){
+                    inner.css("marginLeft",-3000);
+                    n=3;
+                }
+            });
+        }
+    });
+
+    //楼层跳转效果
+    {
+        $(window).scroll(function () {
+            let st=$(window).scrollTop();
+            if(st>200){
+                $(".topBar").show();
+            }else {
+                $(".topBar").hide();
+            }
+            if(st>100){
+                $(".leftBar").show();
+            }else {
+                $(".leftBar").hide();
+            }
+        });
+        $(".tips").click(function () {
+            let index=$(this).index(".tips");//当前元素在tips里的索引值
+            // console.log(index);
+            let ot=$(".container").eq(index).offset().top-60;
+            $("html,body").animate({scrollTop:ot},200);
+        });
+        $(window).scroll(function () {
+            let st=$(window).scrollTop();
+            $(".container").each(function (index,ele) {
+                // console.log(this);
+                // console.log(ele);
+                if(st>$(this).offset().top-150){
+                    $(".tips").removeClass("active").eq(index).addClass("active");
+                }
+            })
+        });
+    }
+
+    //banner效果
+    {
+        $(".pagerbox li").click(function () {
+            let index = $(this).index(".pagerbox li");
+            $(".pagerbox li").removeClass("active").eq(index).addClass("active");
+            $(".imgbox li").removeClass("active").eq(index).addClass("active");
+            n = index;
+        });
+        let n = 0;
+        let flag = true;
+        function move() {
+            n++;
+            if (n === $(".imgbox li").length) {
+                n = 0;
+            }
+            if (n < 0) {
+                n = $(".imgbox li").length - 1;
+            }
+            $(".imgbox li").each(function () {
+                flag = true;
+                $(".imgbox li").removeClass("active").eq(n).addClass("active");
+                $(".pagerbox li").removeClass("active").eq(n).addClass("active");
+            });
+        }
+        $(".banner_rbtn").click(function () {
+            if (flag) {
+                flag = false;
+                move();
+            }
+        });
+        $(".banner_lbtn").click(function () {
+            if (flag) {
+                flag = false;
+                n -= 2;
+                move();
+            }
+        });
+    }
+    //content效果
+    {
+        $(".type ")
+            .mouseenter(function () {
+                let index = $(this).index(".type");
+                $(".type").removeClass("active1").eq(index).addClass("active1");
+                $(".goods ").removeClass("active1").eq(index).addClass("active1");
+            })
+    }
+</script>
+</body>
+</html>
